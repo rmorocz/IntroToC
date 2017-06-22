@@ -1,0 +1,22 @@
+// 0. Documentation: Include purpose of the software, the authors, the date, and any copyright information.
+//
+//    Purpose:          To calculate the area of square shaped rooms
+//    Author:           Ricardo Morocz
+//    Date:             06/22/2017
+//    Acknowledgement:  Work based on the code developed by Ramesh Yerraballi & Jon Valvano as part of the UT Austin's 
+//                      Embedded Systems online course section 5
+//
+// 1. Pre-Processor Directives: Use preprocessor directive #include to connect this software with other modules
+//
+#include <stdio.h> // Diamond braces are used to include system libraries. In this case "Standard I/O"
+#include "uart.h"  // Quates are used to include user libraries. In this case "uart module"
+//
+// 2. Global Declaration: Include global variables and function prototypes for functions defined in this module
+//
+// 3. Functions/Subroutines:
+//
+//    MAIN: Mandatory routine for the C program to be executable
+int main(void) {
+  UART_Init(); // Call subroutine to initialize the uart
+  printf("This program calculates the area of a square room");
+}
