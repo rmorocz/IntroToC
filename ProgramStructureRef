@@ -12,9 +12,11 @@
 // 2. Global Declaration: Include global variables and function prototypes for functions defined in this module
 
 //    Global Variables
+unsigned long error;
 
 //    Function Prototypes: Compiler aid for "type checking"
 unsigned long Calc_Area(unsigned long s); // Expects a unsigned long and returns an unsigned long
+void Initialize (void);
 
 // 3. Functions/Subroutines:
 
@@ -23,20 +25,34 @@ int main(void) {
   unsigned long side; // Room wall in meters. unsigned = no negative, long = 32bit number, side = variable name
   unsigned long area; // Area of the room in squared meters
 
-  UART_Init();        // Call subroutine to initialize the uart
-  printf("This program calculates the area of a square room");
+  UART_Init();        // Initialize the uart
+  Initialize();       // Initialize global variables
   
+  printf("This program calculates the area of a square room");
   side = 3;           // assign the value of 3 meters to var
   Calc_Area(side);    // Invoke area calculation function
-  
-  printf("Area of the room with side of %ld m is %ld sqr m\n",side,area);
+  if(area != 0){
+    printf("Area of the room with side of %ld m is %ld sqr m\n",side,area);
+  }
 }
 
-// CALC_AREA: Function that calculates area of a square room based on the length of it's side
+// Initialize: Function that initializes our global variables
+// Inputs: none
+// Outputs: none
+// Notes:
+void Initialize(void){
+  error = 0;
+}
+
+// Calc_Area: Function that calculates area of a square room based on the length of it's side
 // Input: side of a room (unsigned long)
 // Output: area of the room (unsigned long)
 // Notes:
 unsigned long Calc_Area(unsigned long s){
   unsigned long result; // Contains result of the area calculation
-  results = s*s;        // Area calculation
+  if(s<=25){
+    results = s*s;        // Area calculation
+  }else{
+    result=0;             //error: Rooms cannot have sides larger than 25m
+    error = error+1;      //error counter
 }
