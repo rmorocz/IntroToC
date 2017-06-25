@@ -28,12 +28,18 @@ int main(void) {
   UART_Init();        // Initialize the uart
   Initialize();       // Initialize global variables
   
-  printf("This program calculates the area of a square room");
-  side = 3;           // assign the value of 3 meters to var
-  Calc_Area(side);    // Invoke area calculation function
-  if(area != 0){
+  printf("This program calculates the area of a square room\n");
+  
+  while(side != 0){
+    printf("Give room side (zero to quit): ");
+    scanf("%ld", &side);           // Get input from user
+    area = Calc_Area(side);        // Area calculation function
+    if(area != 0){
     printf("Area of the room with side of %ld m is %ld sqr m\n",side,area);
-  }
+    }else{
+      printf("\nRoom side cannot exceed 25m\n");
+    }
+  } 
 }
 
 // Initialize: Function that initializes our global variables
