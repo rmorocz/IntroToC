@@ -1,0 +1,42 @@
+//--------------------------------------------------------------------------------------------------------------------
+// 0. Documentation
+//    Purpose:          Process to initialize an I/O Port for General Use
+//    Author:           Ricardo Morocz
+//    Date:             06/22/2017
+//    Acknowledgement:  Work based on the code developed by Ramesh Yerraballi & Jon Valvano as part of the UT Austin's 
+//                      Embedded Systems online course
+//--------------------------------------------------------------------------------------------------------------------
+// 1. Pre-Processor Directives
+//--------------------------------------------------------------------------------------------------------------------
+// 2. Global Declaration
+//    Global Variables
+//    Function Prototypes
+void PortF_Init (void);
+//--------------------------------------------------------------------------------------------------------------------
+// 3. Functions/Subroutines:
+
+// PortF_Init: Function that initializes Port F pins for input and output
+// Inputs: none
+// Outputs: none
+// Notes:
+void PortF_Init (void){
+  volatile unsigned long delay;
+  
+  SYSCTL_RCGC2_R |= 0x00000020;    // 1) Activate clock for Port F
+  delay = SYSCTL_RCGC2_R;          // Allow time for clock to start
+  
+  GPIO_PORTF_LOCK_R = 0x4C4F434B;  // 2) unlock GPIO Port F
+  GPIO_PORTF_CR_R = 0x1F;          // Allow changes to PF4-0
+                                   // Only PF0 needs to be unlocked, other bits can't be locked
+                                   
+  GPIO_PORTF_AMSEL_R = 0x00;       // 3) Disable the analog function of the pin, because we will be using the pin for digital I/O
+  
+  GPIO_PORTF_PCTL_R = 0x00000000;  // 4) Clear bits in the PCTL to select regular digital function
+  
+  GPIO_PORTF_DIR_R = 0x0E;         // 5) Set its direction register. [0000 1110] PF4,PF0 in, PF3-1 out
+  
+  GPIO_PORTF_AFSEL_R = 0x00;       // 6) Clear bits in the alternate function register (disable alt funct on PF7-0)
+  GPIO_PORTF_PUR_R = 0x11;         // ENable pull-up on PF0 and PF4
+  
+  GPIO_PORTF_DEN_R = 0x1F;         // 7) Enables digital IO on PF4-0
+}
