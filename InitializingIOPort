@@ -15,6 +15,19 @@ void PortF_Init (void);
 //--------------------------------------------------------------------------------------------------------------------
 // 3. Functions/Subroutines:
 
+// main
+// Inputs: none
+// Outputs: none
+// Notes: none
+int main (void){
+  PortF_Init();                  // Call initialization of port PF4 PF2
+  while(1){
+    In = GPIO_PORTF_DATA_R&0x10; // Read PF4 into In
+    In = In>>2;                  // Shift into position of PF2
+    GPIO_PORTF_DATA_R = In;      // Write output to PF2
+  }
+}
+
 // PortF_Init: Function that initializes Port F pins for input and output
 // Inputs: none
 // Outputs: none
